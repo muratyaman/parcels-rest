@@ -1,0 +1,46 @@
+{
+  "name": "parcels-rest",
+  "version": "1.0.0",
+  "description": "RESTful parcel service",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "clean": "rm -rf dist",
+    "start:dev": "ts-node ./src/index.ts",
+    "start": "node ./dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typeorm": "ts-node ./node_modules/typeorm/cli.js",
+    "migrate": "npm run typeorm migration:run",
+    "rollback": "npm run typeorm migration:revert"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muratyaman/parcels-rest.git"
+  },
+  "keywords": [
+    "parcels",
+    "service",
+    "rest"
+  ],
+  "author": "Haci Murat Yaman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/muratyaman/parcels-rest/issues"
+  },
+  "homepage": "https://github.com/muratyaman/parcels-rest#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-jwt": "^6.0.0",
+    "reflect-metadata": "^0.1.13",
+    "sqlite3": "^5.0.2",
+    "typeorm": "^0.2.31"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.11",
+    "@types/express-jwt": "^6.0.1",
+    "@types/node": "^14.14.31",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.2"
+  }
+}
