@@ -55,3 +55,18 @@ npm run start:dev
 ```
 npm run build
 ```
+
+# Test
+
+```
+npm run test
+npm run test:coverage
+```
+
+Currently:
+
+```
+File                   | % Stmts | % Branch | % Funcs | % Lines
+-----------------------|---------|----------|---------|---------
+All files              |    93.1 |     71.7 |    90.8 |   93.97 
+```

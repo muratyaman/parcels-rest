@@ -1,10 +1,10 @@
-import { createConnection, getCustomRepository } from 'typeorm';
+import { createConnection, getConnectionOptions, getCustomRepository } from 'typeorm';
 import { ParcelsRepo, TrucksRepo, UsersRepo } from './repos';
 import { ParcelsDb } from './types';
 
 export async function newDb(): Promise<ParcelsDb> {
-  // TODO: pass options
-  const conn = await createConnection();
+  const options = await getConnectionOptions();
+  const conn = await createConnection(options);
 
   const parcelsRepo = getCustomRepository(ParcelsRepo);
   const trucksRepo = getCustomRepository(TrucksRepo);

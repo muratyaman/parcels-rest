@@ -8,7 +8,7 @@ export function trucksController(config: IConfig, db: ParcelsDb) {
     let data = null, error = null;
     try {
       const { reg, make, model, emptyWeight } = req.body; // TODO validation
-      data = await db.trucksRepo.createAndSave(reg, make, model, emptyWeight);
+      data = await db.trucksRepo.createAndSave(reg, make, model, Number.parseFloat(emptyWeight));
     } catch (err) {
       error = err.message;
     }

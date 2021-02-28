@@ -41,7 +41,7 @@ export class TrucksRepo extends AbstractRepository<Truck> {
 
   totalParcelWeight(truck: Truck) {
     let w = 0;
-    truck.parcels.forEach(p => { w += p.weight });
+    truck.parcels.forEach(p => { w = w + Number.parseFloat(String(p.weight)); });
     return w;
   }
 

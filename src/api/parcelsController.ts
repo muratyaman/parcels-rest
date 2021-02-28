@@ -12,7 +12,7 @@ export function parcelsController(config: IConfig, db: ParcelsDb) {
       const { weight } = req.body; // TODO validation
       const parcel = new Parcel();
       parcel.truck = truck;
-      parcel.weight = weight;
+      parcel.weight = Number.parseFloat(weight);
 
       // add parcel, update truck
       truck.parcels.push(parcel);
@@ -35,13 +35,13 @@ export function parcelsController(config: IConfig, db: ParcelsDb) {
     res.json({ data });
   }
 
-  async function getParcel(req: Request, res: Response) {
-    res.json({ data: 'TODO' });
-  }
+  // async function getParcel(req: Request, res: Response) {
+  //   res.json({ data: 'TODO' });
+  // }
 
-  async function updateParcel(req: Request, res: Response) {
-    res.json({ data: 'TODO' });
-  }
+  // async function updateParcel(req: Request, res: Response) {
+  //   res.json({ data: 'TODO' });
+  // }
 
   async function delParcel(req: Request, res: Response) {
     let data = null, error = null;
@@ -67,7 +67,8 @@ export function parcelsController(config: IConfig, db: ParcelsDb) {
   return {
     createParcel,
     getParcels,
-    getParcel,
+    //getParcel,
+    //updateParcel,
     delParcel,
   };
 }

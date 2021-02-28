@@ -1,17 +1,16 @@
-import express from 'express';
 import { success } from './env';
+import express from 'express';
 import { newConfig } from './config';
-import { IProcessEnv } from './types';
+import { BootResult, IProcessEnv } from './types';
 import { newDb } from './db';
 import { newApi } from './api';
 import { jwtMiddleware } from './jwtMiddleware';
 
-export async function server(penv: IProcessEnv, startListening = false) {
-  console.log('parcel service is loading...');
-
+export async function server(penv: IProcessEnv, startListening = false): Promise<BootResult> {
+  if (startListening) console.log('parcel service is loading...');
   if (!success) throw new Error('failed to run dotenv.config');
   const config = newConfig(penv);
-  
+
   const db = await newDb();
 
   const { port } = config.http;
@@ -26,5 +25,5 @@ export async function server(penv: IProcessEnv, startListening = false) {
     });
   }
 
-  return { config, httpServer, db };
+  return { httpServer, db };
 }
