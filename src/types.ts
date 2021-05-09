@@ -1,6 +1,6 @@
 import { Application } from 'express';
 import { Connection } from 'typeorm';
-import { ParcelsRepo, TrucksRepo, UsersRepo } from './repos';
+import { ParcelsRepo, TrucksRepo, UsersRepo, TruckWeightHistoryRepo } from './repos';
 
 export interface IProcessEnv {
   HTTP_PORT?: string;
@@ -54,6 +54,7 @@ export interface ParcelsDb {
   parcelsRepo: ParcelsRepo;
   trucksRepo: TrucksRepo;
   usersRepo: UsersRepo;
+  truckWeightHistoryRepo: TruckWeightHistoryRepo;
 }
 
 export interface BootResult {

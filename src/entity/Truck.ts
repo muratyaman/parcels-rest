@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Parcel } from './Parcel';
+import { TruckWeightHistory } from './TruckWeightHistory';
 
 @Entity()
 export class Truck {
@@ -24,4 +25,7 @@ export class Truck {
 
   @OneToMany(() => Parcel, parcel => parcel.truck)
   parcels: Parcel[];
+
+  @OneToMany(() => TruckWeightHistory, it => it.truck)
+  weightHistoryItems: TruckWeightHistory[];
 }

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { Parcel } from '../entity/Parcel';
+import { TruckWeightHistory } from '../entity/TruckWeightHistory';
 import { IConfig, ParcelsDb } from '../types';
 
 export function parcelsController(config: IConfig, db: ParcelsDb) {
@@ -14,11 +15,22 @@ export function parcelsController(config: IConfig, db: ParcelsDb) {
       parcel.truck = truck;
       parcel.weight = Number.parseFloat(weight);
 
+      // take a snapshot of truck with its loaded weight
+      const weightHistoryItem = new TruckWeightHistory();
+      weightHistoryItem.truck = truck;
+      weightHistoryItem.createdAt = (new Date()).toISOString();
+      weightHistoryItem.loadedWeight = truck.loadedWeight;
+      truck.weightHistoryItems.push(weightHistoryItem);
+      const outputWHItem = await db.truckWeightHistoryRepo.save(weightHistoryItem);
+
       // add parcel, update truck
       truck.parcels.push(parcel);
       const truckSaved = db.trucksRepo.updateLoadedWeight(truck);
       
       data = await db.parcelsRepo.save(parcel);
+
+      
+
       data = { ...data, truck: undefined };
     } catch (err) {
       error = err.message;
@@ -52,6 +64,14 @@ export function parcelsController(config: IConfig, db: ParcelsDb) {
       
       const parcel = await db.parcelsRepo.findById(parcelId);
       if (!parcel) throw new Error('parcel not found');
+
+      // take a snapshot of truck with its loaded weight
+      const weightHistoryItem = new TruckWeightHistory();
+      weightHistoryItem.truck = truck;
+      weightHistoryItem.createdAt = (new Date()).toISOString();
+      weightHistoryItem.loadedWeight = truck.loadedWeight;
+      truck.weightHistoryItems.push(weightHistoryItem);
+      const outputWHItem = await db.truckWeightHistoryRepo.save(weightHistoryItem);
 
       // remove parcel, update truck
       truck.parcels = truck.parcels.filter(p => p.id !== parcel.id);

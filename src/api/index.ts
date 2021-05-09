@@ -23,5 +23,7 @@ export function newApi(config: IConfig, db: ParcelsDb) {
   router.get('/trucks/:truckId/parcels', parcels.getParcels);
   router.delete('/trucks/:truckId/parcels/:parcelId', parcels.delParcel);
 
+  router.get('/trucks/:truckId/weight-at-date', trucks.getWeightAtDate);
+
   return router;
 }

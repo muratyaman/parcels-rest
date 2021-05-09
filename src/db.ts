@@ -1,5 +1,5 @@
 import { createConnection, getConnectionOptions, getCustomRepository } from 'typeorm';
-import { ParcelsRepo, TrucksRepo, UsersRepo } from './repos';
+import { ParcelsRepo, TrucksRepo, UsersRepo, TruckWeightHistoryRepo } from './repos';
 import { ParcelsDb } from './types';
 
 export async function newDb(): Promise<ParcelsDb> {
@@ -9,11 +9,13 @@ export async function newDb(): Promise<ParcelsDb> {
   const parcelsRepo = getCustomRepository(ParcelsRepo);
   const trucksRepo = getCustomRepository(TrucksRepo);
   const usersRepo = getCustomRepository(UsersRepo);
+  const truckWeightHistoryRepo = getCustomRepository(TruckWeightHistoryRepo);
 
   return {
     conn,
     parcelsRepo,
     trucksRepo,
     usersRepo,
+    truckWeightHistoryRepo,
   };
 }

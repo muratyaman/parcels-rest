@@ -69,11 +69,39 @@ export function trucksController(config: IConfig, db: ParcelsDb) {
     res.json({ data, error });
   }
 
+  async function getWeightAtDate(req: Request, res: Response) {
+    const { truckId } = req.params;
+    const { date } = req.query; // select latest record before the given date
+    // TODO validate
+
+    const dateGiven = new Date(date);
+
+    // 2012-01-01 ==> 2012-01-01T00:00:00, 2012-01-01T23:59:59
+
+    const truck = await db.trucksRepo.findById(truckId);
+    const rows = truck.weightHistoryItems;
+
+    // filter and find rows before given date
+    const filteredRows: any[] = rows.filter(r => {
+      r.createdAt = new Date(r.createdAt);
+      return r.createdAt <= dateGiven;
+    }).sort((a, b) => {
+      // 0, 1, -1
+      if (a < b) return 1;
+      if (b < a) return -1;
+      return 0;
+    });    
+
+    // pick last one
+    res.json({ data: filteredRows[filteredRows.length - 1] });
+  }
+
   return {
     createTruck,
     getTrucks,
     getTruck,
     updateTruck,
     delTruck,
+    getWeightAtDate,
   }
 }
